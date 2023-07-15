@@ -3,6 +3,9 @@
 // in the html.
 var currentDay = $('#currentDay');
 var date = dayjs();
+saveBtns = document.querySelectorAll('.saveBtn');
+
+elements = document.querySelectorAll('.V');
 
 
 function updateDate() {
@@ -13,9 +16,21 @@ function updateDate() {
 setInterval(updateDate, 1000);
 
 
+// TODO: Add a listener for click events on the save button. This code should
+// Create an event listener for the click event.
+saveBtns.forEach(saveBtn => {
+  saveBtn.addEventListener('click', function() {
+    console.log('The element was clicked!');
+  });
+});
+
+function saveButton() {
+  //document.getElementById("demo").innerHTML = Date();
+  console.log("save?")
+}
 
 $(function () {
-  // TODO: Add a listener for click events on the save button. This code should
+  
 
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
