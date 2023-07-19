@@ -3,9 +3,11 @@
 // in the html.
 var currentDay = $('#currentDay');
 var date = dayjs();
-saveBtns = document.querySelectorAll('.saveBtn');
+var saveBtns = document.querySelectorAll('.saveBtn');
 
-elements = document.querySelectorAll('.V');
+var store = [];
+
+var timeDivs = $('.container').children()
 
 
 function updateDate() {
@@ -13,26 +15,68 @@ function updateDate() {
   currentDay.text(formattedDate);
 }
 
+
+function setColors() {
+  // Get the current hour.
+  var currentHour = date.format('H');
+
+  // Loop through all of the time-block divs.
+  timeDivs.each((index, element) => {
+    // Get the hour from the id of the div.
+    var hour = element.id.split('-')[1];
+
+    // Add the appropriate class to the div.
+    if (hour < currentHour) {
+      element.classList.add('past');
+    } else if (hour == currentHour) {
+      element.classList.add('present');
+    } else {
+      element.classList.add('future');
+    }
+  });
+}
+
+setColors();
+setInterval(setColors,120000);
+
 setInterval(updateDate, 1000);
 
 
 // TODO: Add a listener for click events on the save button. This code should
 // Create an event listener for the click event.
 saveBtns.forEach(saveBtn => {
-  saveBtn.addEventListener('click', function() {
+  saveBtn.addEventListener('click', function(e) {
     console.log('The element was clicked!');
+    saveButton();
+    
+    // use the id in the containing time-block as a key to save the user input in
+    text = $(e.target).siblings()[1]
+    var str = $(e.target).parent();
+    var dd = str.attr("id");
+
+    localStorage.setItem(dd, text.value);
+    text.innerHTML = localStorage.getItem(dd);
+    console.log(text, dd,);
   });
 });
 
+
 function saveButton() {
-  //document.getElementById("demo").innerHTML = Date();
-  console.log("save?")
+  //document.getElementById(".description").innerHTML = "vjj";
+  timeDivs.each((index, element) => {
+    var hour = element.id
+    var text = $(e.target).siblings()[1];
+    text.innerHTML = text.value;
+    console.log("save?")
+  
+  })
 }
 
 $(function () {
   
 
-  // use the id in the containing time-block as a key to save the user input in
+  
+
   // local storage. HINT: What does `this` reference in the click listener
   // function? How can DOM traversal be used to get the "hour-x" id of the
   // time-block containing the button that was clicked? How might the id be
